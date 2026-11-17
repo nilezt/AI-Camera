@@ -1,0 +1,6 @@
+{
+  "name": "PoseCraft",
+  "description": "AI photography studio for pose coaching from scene backgrounds and seamless photo compositing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">PoseCraft</string>
+    <string name="nav_pose_coach">Pose Coach</string>
+    <string name="nav_photo_blend">Photo Blend</string>
+    <string name="nav_gallery">Studio Vault</string>
+    <string name="studio_tagline">AI Director &amp; Lighting Compositor</string>
+
+    <string name="action_take_photo">Camera</string>
+    <string name="action_pick_photo">Gallery</string>
+    <string name="action_try_sample">Use Sample</string>
+    <string name="action_clear_photo">Clear</string>
+    <string name="action_save_device">Save to Photos</string>
+    <string name="action_share">Share</string>
+    <string name="action_send_to_blend">Blend With This Scene</string>
+    <string name="action_retry">Try Again</string>
+
+    <string name="pose_coach_title">Pose Director</string>
+    <string name="pose_coach_subtitle">Upload a location photo &amp; headcount for tailored body posing.</string>
+    <string name="label_scene_background">Scene Background</string>
+    <string name="label_people_count">How Many People?</string>
+    <string name="label_pose_vibe">Shoot Vibe</string>
+    <string name="label_extra_notes">Optional Notes (outfit, props, mood)</string>
+    <string name="hint_pose_notes">e.g. casual coffee walk, holding sunglasses, shy friend</string>
+    <string name="btn_generate_poses">Direct Poses</string>
+    <string name="loading_poses">Scouting light, lines &amp; body placement…</string>
+
+    <string name="photo_blend_title">Studio Blend</string>
+    <string name="photo_blend_subtitle">Combine a scene background and subject photo with matched lighting.</string>
+    <string name="label_subjects_photo">Person or Group Photo</string>
+    <string name="label_lighting_style">Lighting Match</string>
+    <string name="label_framing_style">Framing &amp; Scale</string>
+    <string name="label_blend_direction">Placement &amp; Blending Notes (optional)</string>
+    <string name="hint_blend_direction">e.g. standing near the archway with warm sunset rim light</string>
+    <string name="btn_blend_photos">Composite Photo</string>
+    <string name="loading_blend">Matching light, perspective &amp; shadows (30–60s)…</string>
+
+    <string name="gallery_title">Studio Vault</string>
+    <string name="gallery_subtitle">Your composited portraits and saved scenes.</string>
+    <string name="gallery_empty_title">Your darkroom is empty</string>
+    <string name="gallery_empty_body">Composite your first portrait in Studio Blend to see it archived here.</string>
+
+    <string name="cd_background_preview">Selected background scene preview</string>
+    <string name="cd_subject_preview">Selected person or group photo preview</string>
+    <string name="cd_blended_result">AI composited photo result</string>
+    <string name="cd_decrease_people">Decrease number of people</string>
+    <string name="cd_increase_people">Increase number of people</string>
+    <string name="cd_toggle_overlay">Toggle pose markers on scene</string>
+    <string name="cd_close_preview">Close full-screen preview</string>
+    <string name="cd_delete_item">Delete saved item</string>
+</resources>
