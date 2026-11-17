@@ -82,8 +82,13 @@ fun VaultScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = if (isWideScreen) 24.dp else 16.dp, vertical = 12.dp)
+            .padding(horizontal = if (isWideScreen) 24.dp else 16.dp, vertical = 10.dp)
     ) {
+        Text(
+            text = "ARCHIVED COMPOSITES",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.secondary
+        )
         Text(
             text = stringResource(R.string.gallery_title),
             style = MaterialTheme.typography.headlineMedium,
@@ -95,14 +100,14 @@ fun VaultScreen(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
         if (items.isEmpty()) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.large,
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.6f))
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -113,7 +118,7 @@ fun VaultScreen(
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(170.dp),
+                            .height(160.dp),
                         contentScale = ContentScale.Crop
                     )
                     Column(
@@ -124,7 +129,7 @@ fun VaultScreen(
                         Icon(
                             imageVector = Icons.Default.PhotoLibrary,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
+                            tint = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(32.dp)
                         )
                         Text(

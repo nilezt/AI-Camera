@@ -6,6 +6,7 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,28 +25,28 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.Collections
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.outlined.AutoFixHigh
 import androidx.compose.material.icons.outlined.Collections
 import androidx.compose.material.icons.rounded.AccessibilityNew
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -60,6 +61,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.R
@@ -140,7 +142,7 @@ fun PoseCraftApp(
         viewModel.selectTab(StudioTab.POSE_COACH)
     }
 
-    PoseCraftTheme(darkTheme = uiState.isDarkTheme) {
+    PoseCraftTheme {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             val isWideScreen = maxWidth >= 680.dp
 
@@ -149,106 +151,144 @@ fun PoseCraftApp(
                 contentWindowInsets = WindowInsets.safeDrawing,
                 snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                 topBar = {
-                    CenterAlignedTopAppBar(
-                        title = {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_launcher_art),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(28.dp)
-                                        .clip(RoundedCornerShape(7.dp)),
-                                    contentScale = ContentScale.Crop
-                                )
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Column(horizontalAlignment = Alignment.Start) {
+                    Column {
+                        TopAppBar(
+                            title = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Start
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.img_launcher_art),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(30.dp)
+                                            .clip(RoundedCornerShape(8.dp)),
+                                        contentScale = ContentScale.Crop
+                                    )
+                                    Spacer(modifier = Modifier.width(10.dp))
                                     Text(
                                         text = stringResource(R.string.app_name),
                                         style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Bold,
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
-                            }
-                        },
-                        actions = {
-                            IconButton(
-                                onClick = viewModel::toggleTheme,
-                                modifier = Modifier
-                                    .minimumInteractiveComponentSize()
-                                    .testTag("theme_toggle_button")
-                            ) {
-                                Icon(
-                                    imageVector = if (uiState.isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
-                                    contentDescription = "Switch studio theme",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        },
-                        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.background
+                            },
+                            actions = {
+                                Surface(
+                                    color = MaterialTheme.colorScheme.surfaceContainer,
+                                    shape = RoundedCornerShape(6.dp),
+                                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                                    modifier = Modifier.padding(end = 14.dp)
+                                ) {
+                                    Text(
+                                        text = "AI STUDIO",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                    )
+                                }
+                            },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            )
                         )
-                    )
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline)
+                    }
                 },
                 bottomBar = {
                     if (!isWideScreen) {
-                        NavigationBar(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        ) {
-                            NavigationBarItem(
-                                selected = uiState.activeTab == StudioTab.POSE_COACH,
-                                onClick = { viewModel.selectTab(StudioTab.POSE_COACH) },
-                                icon = {
-                                    Icon(
-                                        imageVector = Icons.Rounded.AccessibilityNew,
-                                        contentDescription = null
-                                    )
-                                },
-                                label = { Text(stringResource(R.string.nav_pose_coach)) },
-                                modifier = Modifier.testTag("nav_pose_coach")
-                            )
-                            NavigationBarItem(
-                                selected = uiState.activeTab == StudioTab.PHOTO_BLEND,
-                                onClick = { viewModel.selectTab(StudioTab.PHOTO_BLEND) },
-                                icon = {
-                                    Icon(
-                                        imageVector = if (uiState.activeTab == StudioTab.PHOTO_BLEND) {
-                                            Icons.Filled.AutoFixHigh
-                                        } else {
-                                            Icons.Outlined.AutoFixHigh
-                                        },
-                                        contentDescription = null
-                                    )
-                                },
-                                label = { Text(stringResource(R.string.nav_photo_blend)) },
-                                modifier = Modifier.testTag("nav_photo_blend")
-                            )
-                            NavigationBarItem(
-                                selected = uiState.activeTab == StudioTab.VAULT,
-                                onClick = { viewModel.selectTab(StudioTab.VAULT) },
-                                icon = {
-                                    BadgedBox(
-                                        badge = {
-                                            if (uiState.vaultItems.isNotEmpty()) {
-                                                Badge { Text("${uiState.vaultItems.size}") }
-                                            }
-                                        }
-                                    ) {
+                        Box {
+                            HorizontalDivider(color = MaterialTheme.colorScheme.outline)
+                            NavigationBar(
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                tonalElevation = 0.dp
+                            ) {
+                                val navItemColors = NavigationBarItemDefaults.colors(
+                                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                                    indicatorColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+
+                                NavigationBarItem(
+                                    selected = uiState.activeTab == StudioTab.POSE_COACH,
+                                    onClick = { viewModel.selectTab(StudioTab.POSE_COACH) },
+                                    icon = {
                                         Icon(
-                                            imageVector = if (uiState.activeTab == StudioTab.VAULT) {
-                                                Icons.Filled.Collections
+                                            imageVector = Icons.Rounded.AccessibilityNew,
+                                            contentDescription = null
+                                        )
+                                    },
+                                    label = {
+                                        Text(
+                                            text = stringResource(R.string.nav_pose_coach),
+                                            style = MaterialTheme.typography.labelMedium
+                                        )
+                                    },
+                                    colors = navItemColors,
+                                    modifier = Modifier.testTag("nav_pose_coach")
+                                )
+                                NavigationBarItem(
+                                    selected = uiState.activeTab == StudioTab.PHOTO_BLEND,
+                                    onClick = { viewModel.selectTab(StudioTab.PHOTO_BLEND) },
+                                    icon = {
+                                        Icon(
+                                            imageVector = if (uiState.activeTab == StudioTab.PHOTO_BLEND) {
+                                                Icons.Filled.AutoFixHigh
                                             } else {
-                                                Icons.Outlined.Collections
+                                                Icons.Outlined.AutoFixHigh
                                             },
                                             contentDescription = null
                                         )
-                                    }
-                                },
-                                label = { Text(stringResource(R.string.nav_gallery)) },
-                                modifier = Modifier.testTag("nav_vault")
-                            )
+                                    },
+                                    label = {
+                                        Text(
+                                            text = stringResource(R.string.nav_photo_blend),
+                                            style = MaterialTheme.typography.labelMedium
+                                        )
+                                    },
+                                    colors = navItemColors,
+                                    modifier = Modifier.testTag("nav_photo_blend")
+                                )
+                                NavigationBarItem(
+                                    selected = uiState.activeTab == StudioTab.VAULT,
+                                    onClick = { viewModel.selectTab(StudioTab.VAULT) },
+                                    icon = {
+                                        BadgedBox(
+                                            badge = {
+                                                if (uiState.vaultItems.isNotEmpty()) {
+                                                    Badge(
+                                                        containerColor = MaterialTheme.colorScheme.secondary,
+                                                        contentColor = MaterialTheme.colorScheme.onSecondary
+                                                    ) {
+                                                        Text("${uiState.vaultItems.size}")
+                                                    }
+                                                }
+                                            }
+                                        ) {
+                                            Icon(
+                                                imageVector = if (uiState.activeTab == StudioTab.VAULT) {
+                                                    Icons.Filled.Collections
+                                                } else {
+                                                    Icons.Outlined.Collections
+                                                },
+                                                contentDescription = null
+                                            )
+                                        }
+                                    },
+                                    label = {
+                                        Text(
+                                            text = stringResource(R.string.nav_gallery),
+                                            style = MaterialTheme.typography.labelMedium
+                                        )
+                                    },
+                                    colors = navItemColors,
+                                    modifier = Modifier.testTag("nav_vault")
+                                )
+                            }
                         }
                     }
                 }
@@ -259,6 +299,13 @@ fun PoseCraftApp(
                         .padding(innerPadding)
                 ) {
                     if (isWideScreen) {
+                        val railItemColors = NavigationRailItemDefaults.colors(
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                            indicatorColor = MaterialTheme.colorScheme.secondaryContainer,
+                            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                         NavigationRail(
                             modifier = Modifier.fillMaxHeight(),
                             containerColor = MaterialTheme.colorScheme.surface
@@ -266,19 +313,17 @@ fun PoseCraftApp(
                             NavigationRailItem(
                                 selected = uiState.activeTab == StudioTab.POSE_COACH,
                                 onClick = { viewModel.selectTab(StudioTab.POSE_COACH) },
-                                icon = {
-                                    Icon(Icons.Rounded.AccessibilityNew, contentDescription = null)
-                                },
+                                icon = { Icon(Icons.Rounded.AccessibilityNew, contentDescription = null) },
                                 label = { Text(stringResource(R.string.nav_pose_coach)) },
+                                colors = railItemColors,
                                 modifier = Modifier.testTag("rail_pose_coach")
                             )
                             NavigationRailItem(
                                 selected = uiState.activeTab == StudioTab.PHOTO_BLEND,
                                 onClick = { viewModel.selectTab(StudioTab.PHOTO_BLEND) },
-                                icon = {
-                                    Icon(Icons.Filled.AutoFixHigh, contentDescription = null)
-                                },
+                                icon = { Icon(Icons.Filled.AutoFixHigh, contentDescription = null) },
                                 label = { Text(stringResource(R.string.nav_photo_blend)) },
+                                colors = railItemColors,
                                 modifier = Modifier.testTag("rail_photo_blend")
                             )
                             NavigationRailItem(
@@ -288,7 +333,12 @@ fun PoseCraftApp(
                                     BadgedBox(
                                         badge = {
                                             if (uiState.vaultItems.isNotEmpty()) {
-                                                Badge { Text("${uiState.vaultItems.size}") }
+                                                Badge(
+                                                    containerColor = MaterialTheme.colorScheme.secondary,
+                                                    contentColor = MaterialTheme.colorScheme.onSecondary
+                                                ) {
+                                                    Text("${uiState.vaultItems.size}")
+                                                }
                                             }
                                         }
                                     ) {
@@ -296,6 +346,7 @@ fun PoseCraftApp(
                                     }
                                 },
                                 label = { Text(stringResource(R.string.nav_gallery)) },
+                                colors = railItemColors,
                                 modifier = Modifier.testTag("rail_vault")
                             )
                         }

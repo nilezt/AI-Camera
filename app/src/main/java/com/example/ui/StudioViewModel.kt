@@ -38,7 +38,6 @@ enum class StudioTab {
 
 data class StudioUiState(
     val activeTab: StudioTab = StudioTab.POSE_COACH,
-    val isDarkTheme: Boolean = true,
 
     // Feature 1: Pose Coach
     val coachBackground: PhotoSource? = null,
@@ -78,10 +77,6 @@ class StudioViewModel(
 
     fun selectTab(tab: StudioTab) {
         _uiState.update { it.copy(activeTab = tab) }
-    }
-
-    fun toggleTheme() {
-        _uiState.update { it.copy(isDarkTheme = !it.isDarkTheme) }
     }
 
     fun clearStatusMessage() {
